@@ -1,3 +1,20 @@
-<mat-toolbar>
-  <span>My Application</span>
+<mat-toolbar color="secondary" class="expanded-toolbar">
+  <span>
+    <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
+    {{title}}
+  </span>
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button mat-button routerLink="/login" *ngIf="!isAuthenticated">
+      <mat-icon>power_settings_new</mat-icon>
+      Login
+    </button>
+    <button mat-button *ngIf="isAuthenticated" (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      Logout
+    </button>
+    <button mat-button routerLink="/products">
+      <mat-icon>gamepad</mat-icon>
+      Play
+    </button>
+  </div>
 </mat-toolbar>
