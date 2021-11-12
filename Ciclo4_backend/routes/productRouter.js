@@ -24,5 +24,29 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.delete('/', async (req, res, next) => {
+  try {
+    const resp = Product.deleteAll();
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+  } catch (error) {
+    res.json(error);
+  }
+})
+
+router.post('/csv', async (req, res, next) => {
+  try {
+    console.log('entra');
+    const rta = await Product.insertCsv();
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(rta);
+  } catch (error) {
+    console.log(error);
+    console.log(error);
+  }
+});
+
 module.exports = router;
 
