@@ -26,10 +26,10 @@ const upload = multer({ storage: storage, fileFilter: ProductFileFilter });
 
 uploadRouter.post('/', upload.single('productFile'), async (req, res, next) => {
   try {
-    await Product.insertCsv();
+    const rta = await Product.insertCsv();
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.json(req.file);
+    res.json(rta);
   } catch (error) {
     console.log(error);
   }
