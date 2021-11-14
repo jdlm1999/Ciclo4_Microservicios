@@ -24,5 +24,16 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.delete('/', async (req, res, next) => {
+  try {
+    const resp = await Product.deleteAll();
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(resp);
+  } catch (error) {
+    res.json(error);
+  }
+})
+
 module.exports = router;
 
