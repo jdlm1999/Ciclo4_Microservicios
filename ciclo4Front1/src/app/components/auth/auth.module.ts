@@ -6,6 +6,7 @@ import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { MaterialModule } from 'src/app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CommonModule,
     AuthRoutingModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    SweetAlert2Module
   ]
 })
 export class AuthModule { }

@@ -8,6 +8,7 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { baseUrlProduct } from './shared/baseURL';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import 'hammerjs';
 import { HeaderComponent } from './components/header/header.component';
@@ -22,6 +23,7 @@ import { FooterComponent } from './components/footer/footer.component';
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
+    SweetAlert2Module,
   ],
   providers: [{ provide: 'BaseUrl', useValue: baseUrlProduct }],
   bootstrap: [AppComponent],
