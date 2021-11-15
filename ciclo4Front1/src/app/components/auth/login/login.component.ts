@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { ProcessHttpmsgService } from 'src/app/services/process-httpmsg.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   user = { username: '', password: '', remember: false };
@@ -21,7 +22,31 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
-    console.log('User: ', this.user)
-    this.dialogRef.close();
+    this.authService.logIn(this.user).subscribe(
+      (user) => {
+        if (user.success) {
+          this.dialogRef.close(user.success);
+          Swal.fire({
+            icon: 'success',
+            title: 'Credeciales correctas, Bienvenido!!!',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          console.log('component:', user);
+        }
+      },
+      (error) => {
+        console.log(error);
+        this.errMess = error;
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops... Credenciales Incorrectas!',
+          text: 'Intenta de nuevo.',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      }
+    );
   }
 }
