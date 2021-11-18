@@ -15,16 +15,61 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  tokenKey = 'JWT';
+  tokenKey: string = 'JWT';
   isAuthenticated: Boolean = false;
   username: Subject<string> = new Subject<string>();
   authToken!: string;
-  admin: boolean = false;
 
   constructor(
     private http: HttpClient,
     private processHTTPMsgService: ProcessHttpmsgService
   ) {}
+
+  storeUserCredentials(credentials: any) {
+    console.log('storeUserCredentials ', credentials);
+    localStorage.setItem(this.tokenKey, JSON.stringify(credentials));
+    this.useCredentials(credentials);
+  }
+
+  useCredentials(credentials: any) {
+    this.isAuthenticated = true;
+    this.sendUsername(credentials.username);
+    this.authToken = credentials.token;
+  }
+
+  sendUsername(name: string) {
+    this.username.next(name);
+  }
+
+  clearUsername() {
+    this.username.next(undefined);
+  }
+
+  loadUserCredentials() {
+    const credentials = JSON.parse(localStorage.getItem(this.tokenKey) || '{}');
+    console.log('loadUserCredentials ', credentials);
+    if (credentials && credentials.username !== undefined) {
+      this.useCredentials(credentials);
+      if (this.authToken) {
+        this.checkJWTtoken();
+      }
+    }
+  }
+
+  checkJWTtoken() {
+    console.log('checkJWTtoken');
+    this.sendUsername('change');
+    console.log('getJWT', this.getUsername());
+    // this.http.get<JWTResponse>(baseURL + 'users/checkJWTtoken')
+    // .subscribe(res => {
+    //   console.log('JWT Token Valid: ', res);
+    //   this.sendUsername(res.user.username);
+    // },
+    // err => {
+    //   console.log('JWT Token invalid: ', err);
+    //   this.destroyUserCredentials();
+    // });
+  }
 
   logIn(user: any): Observable<any> {
     return this.http
@@ -47,25 +92,15 @@ export class AuthService {
       );
   }
 
-  storeUserCredentials(credentials: any) {
-    console.log('storeUserCredentials ', credentials);
-    localStorage.setItem(this.tokenKey, JSON.stringify(credentials));
-    this.useCredentials(credentials);
+  destroyUserCredentials() {
+    this.authToken = '';
+    this.clearUsername();
+    this.isAuthenticated = false;
+    localStorage.removeItem(this.tokenKey);
   }
 
-  useCredentials(credentials: any) {
-    this.isAuthenticated = true;
-    this.sendUsername(credentials.username);
-    this.authToken = credentials.token;
-    this.sendAdmin(credentials.admin);
-  }
-
-  sendUsername(name: string) {
-    this.username.next(name);
-  }
-
-  sendAdmin(admin: boolean) {
-    this.admin = admin;
+  logOut() {
+    this.destroyUserCredentials();
   }
 
   isLoggedIn(): Boolean {
@@ -78,9 +113,5 @@ export class AuthService {
 
   getToken(): string {
     return this.authToken;
-  }
-
-  isAdmin(): boolean {
-    return this.admin;
   }
 }

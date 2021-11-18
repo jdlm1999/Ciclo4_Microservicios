@@ -8,6 +8,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { MaterialModule } from 'src/app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MaterialModule,
     FlexLayoutModule,
     MaterialFileInputModule,
+    SweetAlert2Module
   ],
 })
 export class ProductModule {}

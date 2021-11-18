@@ -4,7 +4,11 @@
     ><mat-icon> local_grocery_store</mat-icon> Productos</a
   >
   <span class="flex-spacer"></span>
-  <a mat-button (click)="openLoginForm()">
+  <h1>{{ username }}</h1>
+  <a mat-button (click)="openLoginForm()" *ngIf="!username">
     <mat-icon>input</mat-icon> <span> Login </span></a
+  >
+  <a *ngIf="username" mat-button (click)="logOut()"
+    ><mat-icon>exit_to_app</mat-icon> Logout</a
   >
 </mat-toolbar>

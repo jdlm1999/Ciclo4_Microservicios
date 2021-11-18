@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Product } from 'src/app/shared/producto';
 import { ProductService } from '../product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -16,7 +18,8 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private productoService: ProductService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.createForm();
   }
@@ -36,7 +39,19 @@ export class ProductListComponent implements OnInit {
       // this.uploadFileForm.value.productFile
     );
     this.productoService.uploadProduct(formData).subscribe(
-      (res) => console.log(res),
+      (res) => {
+        console.log(res);
+        Swal.fire({
+          icon: 'success',
+          title: 'Productos cargados con exito!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setTimeout(() => {
+          // RouterState.reload();
+          window.location.reload();
+        }, 2000);
+      },
       (errmess) => {
         this.errMess = errmess;
         console.log(this.errMess);
