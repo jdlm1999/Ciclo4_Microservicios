@@ -10,7 +10,8 @@ require('./database');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var clietRouter = require('./routes/clientRouter');
+var clientRouter = require('./routes/clientRouter');
+var supplierRouter = require('./routes/supplierRouter');
 
 var app = express();
 app.use(cors());
@@ -27,7 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/client', clietRouter);
+app.use('/client', clientRouter);
+app.use('/supplier', supplierRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
