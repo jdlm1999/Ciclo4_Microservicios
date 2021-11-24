@@ -9,7 +9,7 @@ function Supplie() {
   }
 
   supplier.findOne = async (supplierNit) => {
-    const supplierFound = await Supplier.find({ nit_proveedor: supplierNit });
+    const supplierFound = await Supplier.find({ _id: supplierNit });
     return supplierFound;
   }
 

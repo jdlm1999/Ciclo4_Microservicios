@@ -59,4 +59,15 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.delete('/', async (req, res, next) => {
+  try {
+    const users = await User.deleteMany({})
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(users);
+  } catch (error) {
+    res.json(error);
+  }
+})
+
 module.exports = router;
