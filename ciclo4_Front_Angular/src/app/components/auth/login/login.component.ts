@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { ProcessHttpmsgService } from 'src/app/services/process-httpmsg.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public processHttpMsgService: ProcessHttpmsgService,
-    public dialogRef: MatDialogRef<LoginComponent>
+    public dialogRef: MatDialogRef<LoginComponent>,
+    public router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
       (user) => {
         if (user.success) {
           this.dialogRef.close(user.success);
+          this.router.navigate(['/']);
           Swal.fire({
             icon: 'success',
             title: 'Credeciales correctas, Bienvenido!!!',
@@ -37,7 +40,7 @@ export class LoginComponent implements OnInit {
         }
       },
       (error) => {
-        console.log(error);
+        console.log('error', error);
         this.errMess = error;
         Swal.fire({
           icon: 'error',
