@@ -5,10 +5,10 @@
   >
   <span class="flex-spacer"></span>
   <h1>{{ username }}</h1>
-  <a mat-button (click)="openLoginForm()" *ngIf="!username">
+  <a mat-button (click)="openLoginForm()" *ngIf="!isLogged">
     <mat-icon>input</mat-icon> <span> Login </span></a
   >
-  <a *ngIf="username" mat-button (click)="logOut()"
+  <a mat-button (click)="logOut()" *ngIf="isLogged"
     ><mat-icon>exit_to_app</mat-icon> Logout</a
   >
 </mat-toolbar>

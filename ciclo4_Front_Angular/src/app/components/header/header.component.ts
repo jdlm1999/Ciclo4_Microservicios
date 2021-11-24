@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoginComponent } from '../auth/login/login.component';
 import { AuthService } from '../auth/auth.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -10,24 +11,14 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  username: string | undefined;
+  isAdmin = false;
+  isLogged: boolean = false;
+  username: string | undefined = undefined;
   subscription!: Subscription;
-  authenticated: boolean = false;
+
+  private destroy$ = new Subject<any>();
 
   constructor(public dialog: MatDialog, private authSvc: AuthService) {}
-
-  ngOnInit(): void {
-    this.authSvc.loadUserCredentials();
-    this.subscription = this.authSvc.getUsername().subscribe((user) => {
-      (this.username = user),
-        //   (this.authenticated = user.admin),
-        console.log('user', user);
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 
   openLoginForm() {
     this.dialog.open(LoginComponent, {
@@ -36,8 +27,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  logOut() {
-    this.username = undefined;
-    this.authSvc.logOut();
+  logOut(): void {
+    this.authSvc.logout();
+  }
+
+  ngOnInit(): void {
+    this.authSvc.loadUserCredentials();
+    this.authSvc.user$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+      this.username = user?.username;
+      this.isLogged = user?.success ? true : false;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next({});
+    this.destroy$.complete();
   }
 }
