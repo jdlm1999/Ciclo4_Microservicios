@@ -14,9 +14,19 @@ function ProductController() {
     return products;
   }
 
+  product.findOne = async (productCodigo) => {
+    const productsFound = await Product.find({ _id: productCodigo });
+    return productsFound;
+  }
+
   product.insertOne = async (data) => {
     const newProduct = await Product.create(data);
     return newProduct;
+  }
+
+  product.updateOne = async (id, data) => {
+    const productsUpdate = await Product.findByIdAndUpdate(id, { $set: data });
+    return productsUpdate;
   }
 
   product.deleteAll = async () => {
