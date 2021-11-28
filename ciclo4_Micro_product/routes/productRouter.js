@@ -13,6 +13,17 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:idSupplier', async (req, res, next) => {
+  try {
+    const productGet = await Sale.findOne(req.params.idSupplier);
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(productGet);
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const product = await Product.insertOne(req.body);
@@ -23,6 +34,17 @@ router.post('/', async (req, res, next) => {
     console.log(error);
   }
 });
+
+router.put('/:idSupplier', async (req, res, next) => {
+  try {
+    const productsUpdate = await Sale.updateOne(req.params.idSupplier, req.body);
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(productsUpdate);
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 router.delete('/', async (req, res, next) => {
   try {
