@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoginComponent } from '../auth/login/login.component';
 import { AuthService } from '../auth/auth.service';
 import { takeUntil } from 'rxjs/operators';
+import { CartService } from '../sales/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -15,10 +16,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLogged: boolean = false;
   username: string | undefined = undefined;
   subscription!: Subscription;
+  cartSize!: number;
 
   private destroy$ = new Subject<any>();
 
-  constructor(public dialog: MatDialog, private authSvc: AuthService) {}
+  constructor(
+    public dialog: MatDialog,
+    private authSvc: AuthService,
+    private cartSvd: CartService
+  ) {}
 
   openLoginForm() {
     this.dialog.open(LoginComponent, {
@@ -37,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.username = user?.username;
       this.isLogged = user?.success ? true : false;
     });
+    this.cartSvd.quantityAction$.subscribe((size) => (this.cartSize = size));
   }
 
   ngOnDestroy(): void {

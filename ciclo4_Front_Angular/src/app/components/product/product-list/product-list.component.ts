@@ -4,6 +4,8 @@ import { ProductService } from '../product.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { CartService } from '../../sales/cart.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +21,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     private productoService: ProductService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private cartSvs:CartService
   ) {
     this.createForm();
   }
@@ -65,6 +68,16 @@ export class ProductListComponent implements OnInit {
       (products) => (this.products = products),
       (errMess) => ((this.errMess = errMess), console.log('error: ', errMess))
     );
+  }
+
+  addToCard(product) {
+    console.log(product);
+    this.cartSvs.updateCart(product);
+    this.cartSvs.cartAction$
+    .pipe(
+      tap((products: Product[]) => console.log('Card Products', products))
+    )
+    .subscribe()
   }
 
   ngOnInit() {

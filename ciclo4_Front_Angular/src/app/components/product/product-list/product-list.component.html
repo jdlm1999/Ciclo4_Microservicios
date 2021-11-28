@@ -43,7 +43,7 @@
               <mat-card-title> {{ product.nombre_producto }} </mat-card-title>
             </mat-card-header>
             <mat-card-actions>
-              <button mat-button>
+              <button mat-button (click)="addToCard(product)">
                 <mat-icon>add_shopping_cart</mat-icon>COMPRAR
                 {{ product.precio_venta | currency }}
               </button>

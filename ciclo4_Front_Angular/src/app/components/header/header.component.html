@@ -3,8 +3,14 @@
   <a mat-button routerLink="/product" routerLinkActive="active"
     ><mat-icon> local_grocery_store</mat-icon> Productos</a
   >
+  <a mat-button routerLink="/clients/clientList" routerLinkActive="active"
+    ><mat-icon>person</mat-icon> Clientes</a>
+
   <span class="flex-spacer"></span>
   <h1>{{ username }}</h1>
+  <a mat-button routerLink="/sales/card" routerLinkActive="active" *ngIf="cartSize > 0"
+  ><mat-icon>add_shopping_cart</mat-icon>{{cartSize}}</a
+>
   <a mat-button (click)="openLoginForm()" *ngIf="!isLogged">
     <mat-icon>input</mat-icon> <span> Login </span></a
   >

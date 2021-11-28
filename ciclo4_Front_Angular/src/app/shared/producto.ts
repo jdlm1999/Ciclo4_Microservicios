@@ -5,4 +5,5 @@ export class Product {
   nombre_producto!: string;
   precio_compra!: number;
   precio_venta!: number;
+  qty!: number;
 }
