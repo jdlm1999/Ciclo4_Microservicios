@@ -26,3 +26,32 @@
   height: 32px;
   width: 32px;
 }
+
+::ng-deep .mat-form-field .mat-input-element {
+  color: black;
+}
+::ng-deep .mat-form-field .mat-form-field-label {
+  color: black !important;
+}
+::ng-deep .mat-form-field .mat-form-field-underline {
+  background-color: black;
+}
+::ng-deep .mat-form-field .mat-form-field-ripple {
+  background-color: black;
+}
+::ng-deep .mat-form-field .mat-form-field-required-marker {
+  color: black;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: purple !important;
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: purple;
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-required-marker {
+  color: purple;
+}
+::ng-deep .mat-form-field.mat-focused .mat-input-element {
+  color: purple;
+}

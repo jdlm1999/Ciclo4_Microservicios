@@ -15,15 +15,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./client-list.component.css'],
 })
 export class ClientListComponent implements OnInit {
-  listData!: MatTableDataSource<Client>;
   displayedColumns: string[] = [
     'cedula_cliente',
     'nombre_cliente',
-    'email_cliente',
+    'correo_cliente',
     'telefono_cliente',
     'direccion_cliente',
     'actions',
   ];
+  listData!: MatTableDataSource<Client>;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchKey!: string;
@@ -34,7 +34,7 @@ export class ClientListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '400px';
     this.dialog.open(ClientComponent, dialogConfig);
   }
 
@@ -43,7 +43,7 @@ export class ClientListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
+    dialogConfig.width = '400px';
     this.dialog.open(ClientComponent, dialogConfig);
   }
 
@@ -60,7 +60,10 @@ export class ClientListComponent implements OnInit {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        this.clientSvc.deleteClient(cedula);
+        this.clientSvc.deleteClient(cedula).subscribe(
+          (data) => console.log(data),
+          (error) => console.log(error)
+        );
         Swal.fire({
           icon: 'success',
           title: `Se ha eliminado el cliente con cedula ${cedula}`,
@@ -68,6 +71,10 @@ export class ClientListComponent implements OnInit {
           showConfirmButton: false,
           timer: 2000,
         });
+        setTimeout(() => {
+          // RouterState.reload();
+          window.location.reload();
+        }, 2000);
       } else if (
         /* Read more about handling dismissals below */
         result.dismiss === Swal.DismissReason.cancel
@@ -94,12 +101,10 @@ export class ClientListComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+  private getClients(): void {
     this.clientSvc.getClients().subscribe((list) => {
       let array = list.map((item) => {
-        return {
-          ...item,
-        };
+        return { ...item };
       });
       this.listData = new MatTableDataSource(array);
       this.listData.sort = this.sort;
@@ -107,10 +112,15 @@ export class ClientListComponent implements OnInit {
       this.listData.filterPredicate = (data, filter) => {
         return this.displayedColumns.some((ele) => {
           return (
-            ele != 'actions' && data[ele].toLowerCase().indexOf(filter) != -1
+            ele != 'actions' &&
+            data[ele].toString().toLowerCase().indexOf(filter) != -1
           );
         });
       };
     });
+  }
+
+  ngOnInit(): void {
+    this.getClients();
   }
 }

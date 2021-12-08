@@ -7,6 +7,7 @@ import { ClientComponent } from './client/client.component';
 import { ClientListComponent } from './client-list/client-list.component';
 import { MaterialModule } from 'src/app/material.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     CommonModule,
     ClientsRoutingModule,
     MaterialModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    FlexLayoutModule
   ]
 })
 export class ClientsModule { }

@@ -1,4 +1,4 @@
-const Supplier = require('../models/Supplier');
+const Supplier = require('../models/supplier');
 
 function Supplie() {
   const supplier = {};

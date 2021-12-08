@@ -7,7 +7,7 @@ const clienteSchema = new Schema({
     required: true
   },
   telefono_cliente: {
-    type: Number,
+    type: String,
     required: true
   },
   nombre_cliente: {

@@ -34,7 +34,6 @@ export class ProductListComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.uploadFileForm.value.productFile.files[0]);
     let formData = new FormData();
     formData.append(
       'productFile',
@@ -43,7 +42,6 @@ export class ProductListComponent implements OnInit {
     );
     this.productoService.uploadProduct(formData).subscribe(
       (res) => {
-        console.log(res);
         Swal.fire({
           icon: 'success',
           title: 'Productos cargados con exito!',
@@ -71,13 +69,7 @@ export class ProductListComponent implements OnInit {
   }
 
   addToCard(product) {
-    console.log(product);
     this.cartSvs.updateCart(product);
-    this.cartSvs.cartAction$
-    .pipe(
-      tap((products: Product[]) => console.log('Card Products', products))
-    )
-    .subscribe()
   }
 
   ngOnInit() {

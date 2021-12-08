@@ -1,15 +1,11 @@
-<mat-toolbar>
-  <span>{{clientForm.controls['_id'].value?"Editar Cliente":"Crear Cliente"}}</span>
-  <span class="flex-spacer"></span>
-  <button
-    class="btn-dialog-close"
-    mat-stroked-button
-    (click)="onClose()"
-    tabIndex="-1"
-  >
-    <mat-icon>clear</mat-icon>
-  </button>
-</mat-toolbar>
+<h1
+  mat-dialog-title
+  fxLayoutAlign="space-around center"
+>
+  <span>{{
+    clientForm.controls["_id"].value ? "Editar Cliente" : "Crear Cliente"
+  }}</span>
+</h1>
 
 <form
   novalidate
@@ -17,58 +13,58 @@
   #cform="ngForm"
   (ngSubmit)="onSubmit()"
 >
-  <mat-grid-list cols="2" rowHeight="300px">
-    <mat-grid-tile>
-      <div class="controles-container">
-        <mat-form-field class="half-width">
-          <input
-            matInput
-            formControlName="cedula_cliente"
-            placeholder="Cedula"
-            type="text"
-            required
-          />
-          <mat-error>Invalid email address.</mat-error>
-        </mat-form-field>
-        <mat-form-field class="half-width">
-          <input
-            matInput
-            formControlName="nombre_cliente"
-            placeholder="Nombre"
-            type="text"
-            required
-          />
-        </mat-form-field>
-        <mat-form-field class="half-width">
-          <input
-            matInput
-            formControlName="email_cliente"
-            placeholder="Email"
-            type="text"
-            required
-          />
-        </mat-form-field>
-        <mat-form-field class="half-width">
-          <input
-            matInput
-            formControlName="telefono_cliente"
-            placeholder="Telefono"
-            type="text"
-            required
-          />
-        </mat-form-field>
-        <mat-form-field class="half-width">
-          <input
-            matInput
-            formControlName="direccion_cliente"
-            placeholder="Direccion"
-            type="text"
-            required
-          />
-        </mat-form-field>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div
+    class="controles-container"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <mat-form-field class="half-width">
+      <input
+        matInput
+        formControlName="cedula_cliente"
+        placeholder="Cedula"
+        type="text"
+        required
+      />
+      <mat-error>Invalid email address.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="half-width">
+      <input
+        matInput
+        formControlName="nombre_cliente"
+        placeholder="Nombre"
+        type="text"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="half-width">
+      <input
+        matInput
+        formControlName="correo_cliente"
+        placeholder="Email"
+        type="text"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="half-width">
+      <input
+        matInput
+        formControlName="telefono_cliente"
+        placeholder="Telefono"
+        type="text"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field class="half-width">
+      <input
+        matInput
+        formControlName="direccion_cliente"
+        placeholder="Direccion"
+        type="text"
+        required
+      />
+    </mat-form-field>
+  </div>
   <mat-dialog-actions>
     <span class="flex-spacer"></span>
     <button mat-button mat-dialog-close>Cancel</button>
@@ -78,7 +74,9 @@
       class="background-primary text-floral-white"
       [disabled]="clientForm.invalid"
     >
-      Login
+    {{
+      clientForm.controls["_id"].value ? "Editar Cliente" : "Crear Cliente"
+    }}
     </button>
   </mat-dialog-actions>
 </form>

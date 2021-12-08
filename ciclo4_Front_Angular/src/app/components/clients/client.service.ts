@@ -29,9 +29,10 @@ export class ClientService {
   createForm() {
     this.clientForm = this.fb.group({
       _id: [''],
+      __v: [''],
       cedula_cliente: ['', [Validators.required]],
       nombre_cliente: ['', [Validators.required]],
-      email_cliente: ['', [Validators.required]],
+      correo_cliente: ['', [Validators.required]],
       telefono_cliente: ['', [Validators.required]],
       direccion_cliente: ['', [Validators.required]],
     });
@@ -49,13 +50,34 @@ export class ClientService {
     this.clientForm.setValue(employee);
   }
 
-  getClients(): Observable<Client[]> {
+  postClient(data): Observable<Client> {
     return this.http
-      .get<Client[]>('http://localhost:3000/clients')
+      .post<Client>('http://localhost:8082/client', data)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  updateClient(data, id): Observable<Client> {
+    console.log(data);
+    return this.http
+      .put<Client>(`http://localhost:8082/client/${id}`, data)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  getClients(): Observable<any> {
+    return this.http
+      .get<any>('http://localhost:8082/client')
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  getClient(id): Observable<Client[]>{
+    return this.http
+      .get<Client[]>(`http://localhost:8082/client/${id}`)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   deleteClient(id) {
-    console.log('Delete', id);
-  };
+    return this.http
+      .delete(`http://localhost:8082/client/${id}`)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
 }

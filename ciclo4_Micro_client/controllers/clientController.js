@@ -9,7 +9,7 @@ function ClientController() {
   }
 
   client.findOne = async (clientCodigo) => {
-    const clientFound = await Client.find({ _id: clientCodigo });
+    const clientFound = await Client.find({ cedula_cliente: clientCodigo });
     return clientFound;
   }
 
@@ -19,7 +19,7 @@ function ClientController() {
   }
 
   client.updateOne = async (id, data) => {
-    const clientUpdate = await Client.findByIdAndUpdate(id, { $set: data });
+    const clientUpdate = await Client.findByIdAndUpdate(id, { $set: data }, { new: true });
     return clientUpdate;
   }
 

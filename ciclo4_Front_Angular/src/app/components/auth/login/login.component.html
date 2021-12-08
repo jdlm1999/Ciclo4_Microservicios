@@ -1,6 +1,8 @@
-<h1 mat-dialog-title>Bienvenido, Inicia Sesion</h1>
+<h1 mat-dialog-title>
+  <span>Bienvenido, Inicia Sesión</span>
+</h1>
 
-<div class="form-size">
+<div class="form-size" fxLayout="column" fxLayoutAlign="space-around center">
   <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content>
       <p>

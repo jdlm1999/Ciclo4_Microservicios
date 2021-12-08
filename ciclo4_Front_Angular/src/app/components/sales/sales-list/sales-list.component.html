@@ -1,0 +1,155 @@
+<div class="container">
+  <div fxFlex fxLayout="column" fxLayoutGap="10px">
+    <div fxFlex>
+      <div>
+        <h3>Ventas</h3>
+        <hr />
+      </div>
+    </div>
+    <div fxFlex='100px' fxLayout="row" fxLayoutAlign='space-around center'>
+      <button mat-button mat-raised-button (click)="showSalesTable()">Mostrar Clientes</button>
+      <button mat-button mat-raised-button (click)="showClientTable()">Mostrar Ventas Clientes</button>
+    </div>
+    <div *ngIf="salesTable">
+      <mat-table
+        class="lessons-table mat-elevation-z8"
+        [dataSource]="listData"
+        matSort
+      >
+        <ng-container matColumnDef="codigo_venta">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Codigo Venta</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.codigo_venta
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="cedula_cliente">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Cedula Cliente</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.cedula_cliente
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="cedula_usuario">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Cedula Usuario</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.cedula_usuario
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="iva_venta">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Iva Venta</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{ element.iva_venta }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="total_venta">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Total Venta</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.total_venta
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="valor_venta">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Valor Venta</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.valor_venta
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="loading">
+          <mat-footer-cell *matFooterCellDef colspan="5">
+            Loading data...
+          </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+          <mat-footer-cell *matFooterCellDef colspan="5">
+            No data.
+          </mat-footer-cell>
+        </ng-container>
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        <mat-footer-row
+          *matFooterRowDef="['loading']"
+          [ngClass]="{ hide: listData != null }"
+        ></mat-footer-row>
+        <mat-footer-row
+          *matFooterRowDef="['noData']"
+          [ngClass]="{ hide: !(listData != null && listData.data.length == 0) }"
+        ></mat-footer-row>
+      </mat-table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        [pageSize]="5"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+    
+    <div *ngIf="clientTable">
+      <mat-table
+        class="lessons-table mat-elevation-z8"
+        [dataSource]="clientSalesShow"
+        matSort
+      >
+        <ng-container matColumnDef="cedula_mostrar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Cedula Cliente</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.cedula_mostrar
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="nombre_mostrar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Nombre Cliente</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.nombre_mostrar
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="valor_mostrar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Valor Total</mat-header-cell
+          >
+          <mat-cell *matCellDef="let element">{{
+            element.valor_mostrar
+          }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="loading">
+          <mat-footer-cell *matFooterCellDef colspan="5">
+            Loading data...
+          </mat-footer-cell>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+          <mat-footer-cell *matFooterCellDef colspan="5">
+            No data.
+          </mat-footer-cell>
+        </ng-container>
+        <mat-header-row
+          *matHeaderRowDef="displayedColumnsClientsSales; sticky: true"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsClientsSales"></mat-row>
+        <mat-footer-row
+          *matFooterRowDef="['loading']"
+          [ngClass]="{ hide: clientSalesShow != null }"
+        ></mat-footer-row>
+        <mat-footer-row
+          *matFooterRowDef="['noData']"
+          [ngClass]="{ hide: !(clientSalesShow != null && clientSalesShow.length == 0) }"
+        ></mat-footer-row>
+      </mat-table>
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        [pageSize]="5"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>
