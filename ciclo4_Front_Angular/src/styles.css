@@ -6,9 +6,8 @@ body {
   font-family: Roboto, sans-serif; 
 }
 
-.container {
-  margin: 1.25rem;
-  display: flex;
+div.container{
+  margin: 25px 40px;
 }
 
 .flex-spacer {
@@ -20,4 +19,11 @@ mat-dialog-container {
   background: white !important;
   color: black !important;
 }
+
+.hide{
+  display: none;
+}
+
+
+
 

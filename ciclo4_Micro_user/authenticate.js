@@ -1,10 +1,10 @@
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var User = require('./models/user');
+const  passport = require('passport');
+const  LocalStrategy = require('passport-local').Strategy;
+const  User = require('./models/user');
 
-var JwtStrategy = require('passport-jwt').Strategy;
-var ExtractJwt = require('passport-jwt').ExtractJwt;
-var jwt = require('jsonwebtoken');
+const  JwtStrategy = require('passport-jwt').Strategy;
+const  ExtractJwt = require('passport-jwt').ExtractJwt;
+const  jwt = require('jsonwebtoken');
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -14,7 +14,7 @@ exports.getToken = (user) => {
   return jwt.sign(user, process.env.SECRET_KEY, { expiresIn: 3600 });
 };
 
-var opts = {};
+const  opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.SECRET_KEY;
 
@@ -38,7 +38,7 @@ verifyAdmin = (req, res, next) => {
   if (req.user.admin) {
     next();
   } else {
-    var err = new Error('You are not authorized to perform this operation!');
+    const  err = new Error('You are not authorized to perform this operation!');
     err.status = 403;
     return next(err);
   }

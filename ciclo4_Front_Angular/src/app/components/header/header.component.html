@@ -3,8 +3,20 @@
   <a mat-button routerLink="/product" routerLinkActive="active"
     ><mat-icon> local_grocery_store</mat-icon> Productos</a
   >
+  <a mat-button routerLink="/clients/clientList" routerLinkActive="active" *ngIf="isLogged"
+    ><mat-icon>person</mat-icon> Clientes</a>
+  <a mat-button routerLink="/sales" routerLinkActive="active" *ngIf="isLogged"
+    ><mat-icon> attach_money</mat-icon> Reportes</a>
+
   <span class="flex-spacer"></span>
-  <a mat-button (click)="openLoginForm()">
+  <h1>{{ username }}</h1>
+  <a mat-button routerLink="/sales/card" routerLinkActive="active" *ngIf="cartSize"
+  ><mat-icon>add_shopping_cart</mat-icon>{{cartSize}}</a
+>
+  <a mat-button (click)="openLoginForm()" *ngIf="!isLogged">
     <mat-icon>input</mat-icon> <span> Login </span></a
+  >
+  <a mat-button (click)="logOut()" *ngIf="isLogged"
+    ><mat-icon>exit_to_app</mat-icon> Logout</a
   >
 </mat-toolbar>

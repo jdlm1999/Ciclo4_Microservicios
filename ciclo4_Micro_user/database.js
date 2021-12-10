@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 
-const uri = process.env.DB_HOST;
+const Bogota = process.env.DB_HOST;
+const all = process.env.DB_HOST_All;
 
-mongoose.connect(uri, {
+mongoose.connect(Bogota, {
+  dbName: process.env.DB_BOGOTA,
   useUnifiedTopology: true,
   useNewUrlParser: true
-}).then(db => console.log('Database is Connected'))
+}).then(db => console.log('Database sales is Connected'))
   .catch(err => console.log(err));

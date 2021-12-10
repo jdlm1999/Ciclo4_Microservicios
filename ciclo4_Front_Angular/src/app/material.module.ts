@@ -15,6 +15,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   exports: [
@@ -37,6 +40,9 @@ import { MatSliderModule } from '@angular/material/slider';
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatSliderModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
 })
 export class MaterialModule {}

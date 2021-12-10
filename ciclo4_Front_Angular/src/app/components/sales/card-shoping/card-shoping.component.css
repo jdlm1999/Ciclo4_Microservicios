@@ -1,0 +1,9 @@
+.qty {
+  display: inline-block;
+  width: 100px;
+  font-size: 0;
+}
+
+.btn-box {
+  box-sizing: border-box;
+}

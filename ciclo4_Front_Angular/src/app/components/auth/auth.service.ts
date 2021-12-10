@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { ProcessHttpmsgService } from 'src/app/services/process-httpmsg.service';
 
 interface AuthResponse {
-  status: string;
-  success: string;
+  success: boolean;
+  username: string;
   token: string;
   admin: boolean;
 }
@@ -15,16 +16,36 @@ interface AuthResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  tokenKey = 'JWT';
+  userKey: string = 'user';
   isAuthenticated: Boolean = false;
-  username: Subject<string> = new Subject<string>();
+  private user = new BehaviorSubject<AuthResponse | null>(null);
   authToken!: string;
-  admin: boolean = false;
 
   constructor(
     private http: HttpClient,
-    private processHTTPMsgService: ProcessHttpmsgService
+    private processHTTPMsgService: ProcessHttpmsgService,
+    private router: Router
   ) {}
+
+  get user$(): Observable<AuthResponse | null> {
+    return this.user.asObservable();
+  }
+
+  get userValue(): AuthResponse | null {
+    return this.user.getValue();
+  }
+
+  saveLocalStorage(user: AuthResponse): void {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+
+  loadUserCredentials() {
+    const user = JSON.parse(localStorage.getItem(this.userKey) || '{}');
+    console.log('loadUserCredentials ', user);
+    if (user && user.username !== undefined) {
+      this.user.next(user);
+    }
+  }
 
   logIn(user: any): Observable<any> {
     return this.http
@@ -36,51 +57,24 @@ export class AuthService {
         map((res) => {
           console.log('res:', res);
           console.log('token:', JSON.parse(atob(res.token.split('.')[1])));
-          this.storeUserCredentials({
-            username: user.username,
+          const auth: AuthResponse = {
+            success: res.success,
+            username: JSON.parse(atob(res.token.split('.')[1])).username,
             token: res.token,
-            admin: JSON.parse(atob(res.token.split('.')[1])),
-          });
-          return { success: true, username: user.username };
+            admin: JSON.parse(atob(res.token.split('.')[1])).admin,
+          };
+          this.saveLocalStorage(auth);
+          this.user.next(auth);
+          return auth;
         }),
         catchError((error) => this.processHTTPMsgService.handleError(error))
       );
   }
 
-  storeUserCredentials(credentials: any) {
-    console.log('storeUserCredentials ', credentials);
-    localStorage.setItem(this.tokenKey, JSON.stringify(credentials));
-    this.useCredentials(credentials);
-  }
-
-  useCredentials(credentials: any) {
-    this.isAuthenticated = true;
-    this.sendUsername(credentials.username);
-    this.authToken = credentials.token;
-    this.sendAdmin(credentials.admin);
-  }
-
-  sendUsername(name: string) {
-    this.username.next(name);
-  }
-
-  sendAdmin(admin: boolean) {
-    this.admin = admin;
-  }
-
-  isLoggedIn(): Boolean {
-    return this.isAuthenticated;
-  }
-
-  getUsername(): Observable<string> {
-    return this.username.asObservable();
-  }
-
-  getToken(): string {
-    return this.authToken;
-  }
-
-  isAdmin(): boolean {
-    return this.admin;
+  logout(): void {
+    console.log('LogoutSVC');
+    localStorage.removeItem(this.userKey);
+    this.user.next(null);
+    this.router.navigate(['/']);
   }
 }

@@ -4,23 +4,33 @@ const fs = require('fs')
 
 const path = 'public/files/products.csv';
 
-const Produ = require('../models/product');
+const Product = require('../models/product');
 
-function Product() {
+function ProductController() {
   const product = {};
 
   product.findAll = async () => {
-    const products = await Produ.find({});
+    const products = await Product.find({});
     return products;
   }
 
+  product.findOne = async (productCodigo) => {
+    const productsFound = await Product.find({ _id: productCodigo });
+    return productsFound;
+  }
+
   product.insertOne = async (data) => {
-    const newProduct = await Produ.create(data);
+    const newProduct = await Product.create(data);
     return newProduct;
   }
 
+  product.updateOne = async (id, data) => {
+    const productsUpdate = await Product.findByIdAndUpdate(id, { $set: data });
+    return productsUpdate;
+  }
+
   product.deleteAll = async () => {
-    const del = await Produ.deleteMany({});
+    const del = await Product.deleteMany({});
     return del;
   }
 
@@ -46,7 +56,7 @@ function Product() {
                 }
                 return productoJson;
               })
-              const rta = Produ.insertMany(arregloJson);
+              const rta = Product.insertMany(arregloJson);
               resolve(rta);
             })
             .on('error', function (err) {
@@ -61,4 +71,4 @@ function Product() {
   return product;
 }
 
-module.exports = Product();
+module.exports = ProductController();
