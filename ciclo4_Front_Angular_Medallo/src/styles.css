@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+body { 
+  padding: 0; 
+  margin: 0; 
+  font-family: Roboto, sans-serif; 
+}
+
+div.container{
+  margin: 25px 40px;
+}
+
+.flex-spacer {
+  flex: 1 1 auto;
+}
+
+mat-dialog-container {
+  border-radius: 10px !important;
+  background: white !important;
+  color: black !important;
+}
+
+.hide{
+  display: none;
+}
+
+
+
+

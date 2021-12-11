@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  ciclo4microuser:
+    image: ciclo4microuser
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3004:8081
+  mongo:
+    container_name: mongousers
+    image: mongo
+    ports:
+      - "27024:27017"

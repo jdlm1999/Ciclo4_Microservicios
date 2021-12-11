@@ -1,0 +1,16 @@
+.content {
+  padding: 16px;
+}
+
+.form{
+}
+
+.card {
+  background-color: white;
+  color: black;
+  border-radius: .625rem;
+}
+
+.button {
+  background-color: darkgray;
+}

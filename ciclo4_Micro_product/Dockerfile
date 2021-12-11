@@ -1,6 +1,7 @@
-FROM node:14
-WORKDIR /CICLO4_MICRO_PRODUCT
-COPY package.json ./
+FROM node:lts-alpine
+WORKDIR /usr/src/app
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
 RUN npm install
 COPY . .
-CMD npm start
+EXPOSE 3000
+CMD ["npm", "start"]

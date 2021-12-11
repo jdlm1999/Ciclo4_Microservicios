@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Docker Node.js Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "platform": "node",
+            "node": {
+                "package": "${workspaceFolder}/ciclo4_Micro_sale/package.json",
+                "localRoot": "${workspaceFolder}/ciclo4_Micro_sale"
+            }
+        }
+    ]
+}

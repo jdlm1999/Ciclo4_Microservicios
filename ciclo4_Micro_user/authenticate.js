@@ -11,12 +11,12 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 exports.getToken = (user) => {
-  return jwt.sign(user, process.env.SECRET_KEY, { expiresIn: 3600 });
+  return jwt.sign(user, '12345-67890-09876-54321', { expiresIn: 3600 });
 };
 
 const  opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = process.env.SECRET_KEY;
+opts.secretOrKey = '12345-67890-09876-54321';
 
 exports.jwtPassport = passport.use(new JwtStrategy(opts,
   (jwt_payload, done) => {

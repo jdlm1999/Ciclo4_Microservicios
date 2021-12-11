@@ -1,0 +1,155 @@
+<div class="container">
+  <div fxFlex="100" fxLayoutGap="10px">
+    <div>
+      <div>
+        <h3>Carrito de Compras</h3>
+        <hr />
+      </div>
+    </div>
+    <div
+      fxLayoutGap="10px"
+      fxLayout="row"
+      fxLayout.sm="column"
+      fxLayout.xs="column"
+      fxLayoutAlign.gt-md="space-around center"
+    >
+      <div fxFlex="70">
+        <mat-table [dataSource]="listData" class="mat-elevation-z8" matSort>
+          <ng-container matColumnDef="codigo_producto">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              >Codigo Producto</mat-header-cell
+            >
+            <mat-cell *matCellDef="let element">{{
+              element.codigo_producto
+            }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="nombre_producto">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              >Nombre Producto</mat-header-cell
+            >
+            <mat-cell *matCellDef="let element">{{
+              element.nombre_producto
+            }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="qty" class="qty">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              >Cantidad del Producto</mat-header-cell
+            >
+            <mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="decrease(element.codigo_producto)"
+                class="btn-box"
+              >
+                <mat-icon>remove_circle</mat-icon>
+              </button>
+              {{ element.qty }}
+              <button
+                mat-icon-button
+                class="btn-box"
+                color="secondary"
+                (click)="increase(element.codigo_producto)"
+              >
+                <mat-icon>add_box</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="valor_total">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              >Total del Producto</mat-header-cell
+            >
+            <mat-cell *matCellDef="let element">{{
+              element.precio_venta * element.qty | currency
+            }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="onDeleteCart(row._id)"
+              >
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="loading">
+            <mat-footer-cell *matFooterCellDef colspan="5">
+              Loading data...
+            </mat-footer-cell>
+          </ng-container>
+          <ng-container matColumnDef="noData">
+            <mat-footer-cell *matFooterCellDef colspan="5">
+              No hay productos en el carrito.
+            </mat-footer-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          <mat-footer-row
+            *matFooterRowDef="['loading']"
+            [ngClass]="{ hide: listData != null }"
+          ></mat-footer-row>
+          <mat-footer-row
+            *matFooterRowDef="['noData']"
+            [ngClass]="{
+              hide: !(listData != null && listData.data.length == 0)
+            }"
+          ></mat-footer-row>
+        </mat-table>
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          [pageSize]="5"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
+      <div
+        fxFlex="30"
+        *ngIf="{
+          total: totalWIva$ | async,
+          iva: totalIva$ | async,
+          totalPIva: totalPIva$ | async
+        } as dataCart"
+      >
+        <mat-card
+          class="card mat-elevation-z4"
+          fxLayout="column"
+          fxLayoutAlign="center center"
+        >
+          <mat-card-title>Carrito de Productos</mat-card-title>
+          <br />
+          <mat-card-content fxLayout="column">
+            <div fxFlex="100%">
+              <input
+                matInput
+                type="text"
+                appearance="fill"
+                placeholder="Cedula Cliente"
+                fxFlex="50%"
+                [(ngModel)]="cedCliente"
+              />
+              <button mat-button (click)="getClientCed()" fxFlex="50%">
+                Consultar cliente
+              </button>
+            </div>
+            <div fxFlex="100%">
+              <br />
+              <p *ngIf="client">
+                Nombre del Cliente: {{ client.nombre_cliente }}<br />
+                Cedula del Cliente: {{ client.cedula_cliente }}
+              </p>
+              <p>Total sin Iva: {{ dataCart.total | currency }}</p>
+              <p>Total del Iva: {{ dataCart.iva | currency }}</p>
+              <p>Total con Iva: {{ dataCart.totalPIva | currency }}</p>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="confirmSale()">Confimar Venta</button>
+            <button mat-button (click)="cancelarVenta()">Cancelar Venta</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

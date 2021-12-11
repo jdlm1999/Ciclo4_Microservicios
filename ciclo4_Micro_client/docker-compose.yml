@@ -1,18 +1,17 @@
-version: "3.8"
+version: '3.4'
 
 services:
-  app:
-    container_name: micro_client
-    restart: always
-    build: .
+  ciclo4microcliente:
+    image: ciclo4microcliente
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
     ports:
-      - "3002:8080"
-    links:
-        - mongo
-    volumes:
-      - .:/CICLO4_MICRO_CLIENT
+      - 3003:8082
   mongo:
-    container_name: mymongodb
+    container_name: mongoclients
     image: mongo
     ports:
-      - "27018:27017"
+      - "27023:27017"
