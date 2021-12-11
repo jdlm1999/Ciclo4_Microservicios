@@ -1,0 +1,35 @@
+<div class="container" fxFlex fxLayout="column">
+  <div fxFlex fxLayout="column" fxLayoutGap="10px">
+    <div fxFlex>
+      <div>
+        <h3>Reporte</h3>
+        <hr />
+      </div>
+    </div>
+  </div>
+  <div
+    fxFlex
+    fxLayout="column"
+    fxLayoutAlign="space-around center"
+    fxLayoutGap="10px"
+  >
+    <table class="mat-elevation-z8">
+      <tr>
+        <th>Ciudad</th>
+        <th>Valor Total</th>
+      </tr>
+      <tr>
+        <th>Bogota</th>
+        <th>{{ bogota | currency }}</th>
+      </tr>
+      <tr>
+        <th>Medellin</th>
+        <th>{{ medallo | currency }}</th>
+      </tr>
+      <tr>
+        <th>Total</th>
+        <th>{{ total | currency }}</th>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -17,13 +17,19 @@ export class SalesService {
   postSale(sale): Observable<Sale>{
     console.log(sale);
     return this.http
-      .post<Sale>('http://localhost:8084/sales', sale)
+      .post<Sale>('http://localhost:3000/sales', sale)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
-  getSales(): Observable<any> {
+  getSalesBogota(): Observable<any> {
     return this.http
-      .get<any>('http://localhost:8084/sales')
+      .get<any>('http://localhost:3000/sales')
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  getSalesMedallo(): Observable<any> {
+    return this.http
+      .get<any>('http://localhost:3001/sales')
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

@@ -7,13 +7,15 @@ import { CardShopingComponent } from './card-shoping/card-shoping.component';
 import { MaterialModule } from 'src/app/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SalesListComponent } from './sales-list/sales-list.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 @NgModule({
   declarations: [
     SalesComponent,
     CardShopingComponent,
-    SalesListComponent
+    SalesListComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,

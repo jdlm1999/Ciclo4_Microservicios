@@ -52,32 +52,32 @@ export class ClientService {
 
   postClient(data): Observable<Client> {
     return this.http
-      .post<Client>('http://localhost:8082/client', data)
+      .post<Client>('http://localhost:3003/client', data)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   updateClient(data, id): Observable<Client> {
     console.log(data);
     return this.http
-      .put<Client>(`http://localhost:8082/client/${id}`, data)
+      .put<Client>(`http://localhost:3003/client/${id}`, data)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   getClients(): Observable<any> {
     return this.http
-      .get<any>('http://localhost:8082/client')
+      .get<any>('http://localhost:3003/client')
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   getClient(id): Observable<Client[]>{
     return this.http
-      .get<Client[]>(`http://localhost:8082/client/${id}`)
+      .get<Client[]>(`http://localhost:3003/client/${id}`)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   deleteClient(id) {
     return this.http
-      .delete(`http://localhost:8082/client/${id}`)
+      .delete(`http://localhost:3003/client/${id}`)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

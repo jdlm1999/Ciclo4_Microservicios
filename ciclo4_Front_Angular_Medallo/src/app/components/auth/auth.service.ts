@@ -49,7 +49,7 @@ export class AuthService {
 
   logIn(user: any): Observable<any> {
     return this.http
-      .post<AuthResponse>('http://localhost:8081/users/login', {
+      .post<AuthResponse>('http://localhost:3004/users/login', {
         username: user.username,
         password: user.password,
       })

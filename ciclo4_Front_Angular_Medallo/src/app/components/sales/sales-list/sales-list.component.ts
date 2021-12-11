@@ -97,7 +97,10 @@ export class SalesListComponent implements OnInit {
       array.push({
         cedula_mostrar: client.cedula_cliente,
         nombre_mostrar: client.nombre_cliente,
-        valor_mostrar: this.saleClient.get(client.cedula_cliente),
+        valor_mostrar:
+          this.saleClient.get(client.cedula_cliente) > 0
+            ? this.saleClient.get(client.cedula_cliente)
+            : 0,
       });
     });
     this.clientSalesShow = array;
@@ -107,7 +110,7 @@ export class SalesListComponent implements OnInit {
     this.salesTable = true;
     this.clientTable = false;
   }
-  
+
   showClientTable() {
     this.salesTable = false;
     this.clientTable = true;

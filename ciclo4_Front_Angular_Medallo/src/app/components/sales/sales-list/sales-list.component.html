@@ -51,7 +51,7 @@
             >Total Venta</mat-header-cell
           >
           <mat-cell *matCellDef="let element">{{
-            element.total_venta
+            element.total_venta | currency
           }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="valor_venta">
@@ -59,7 +59,7 @@
             >Valor Venta</mat-header-cell
           >
           <mat-cell *matCellDef="let element">{{
-            element.valor_venta
+            element.valor_venta | currency
           }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="loading">
@@ -119,7 +119,7 @@
             >Valor Total</mat-header-cell
           >
           <mat-cell *matCellDef="let element">{{
-            element.valor_mostrar
+            element.valor_mostrar | currency
           }}</mat-cell>
         </ng-container>
         <ng-container matColumnDef="loading">
